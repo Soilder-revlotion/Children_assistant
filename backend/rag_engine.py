@@ -3,6 +3,7 @@
 import json
 import os
 import pickle
+import re
 import time
 from typing import Optional
 
@@ -425,10 +426,44 @@ class RAGEngine:
             print(f"[ERROR] LLM call failed: {e}")
             return f"抱歉，AI 服务暂时不可用，请稍后重试。（错误：{str(e)[:100]}）"
 
+    def _expand_query(self, question: str) -> str:
+        """查询扩展：补充用户省略的关键词，提升检索召回"""
+        expansions = [
+            # 体温 → 发烧
+            (r"(\d+)\s*度", r"\1度 发烧"),
+            # 拉肚子 → 腹泻
+            (r"拉肚子", "拉肚子 腹泻"),
+            # 不睡觉 → 睡眠
+            (r"不(肯)?睡觉", "不睡觉 入睡困难 睡眠"),
+            # 不长个 → 发育
+            (r"不[太长]个", "不长个 身高 发育迟缓"),
+            # 不吃饭 → 食欲
+            (r"不(肯|爱)?吃饭", "不吃饭 食欲不振 喂养"),
+            # 打疫苗 → 接种
+            (r"打(疫苗|预防针)", "接种疫苗"),
+            # 身上起 → 皮疹
+            (r"身上起.*(点|疹|包|疙瘩)", r"\g<0> 皮疹"),
+            # 咳嗽 → 感冒
+            (r"咳嗽(?![一-鿿])", "咳嗽 感冒 呼吸道"),
+        ]
+        expanded = question
+        for pattern, replacement in expansions:
+            if re.search(pattern, expanded):
+                expanded = re.sub(pattern, replacement, expanded)
+        if expanded != question:
+            print(f"[INFO] Query expanded: {question[:40]} → {expanded[:60]}")
+        return expanded
+
     def query(self, question: str) -> dict:
         """完整 RAG 查询流程：检索 → 生成"""
         t0 = time.time()
-        docs = self.retrieve(question)
+        expanded = self._expand_query(question)
+        docs = self.retrieve(expanded)
+        # 如果扩展查询结果差，回退到原始查询
+        if not docs or (docs and docs[0].get("similarity", 0) < 0.35):
+            docs_original = self.retrieve(question)
+            if docs_original and (not docs or docs_original[0].get("similarity", 0) > docs[0].get("similarity", 0)):
+                docs = docs_original
         result = self.generate(question, docs)
         result["retrieval_ms"] = round((time.time() - t0) * 1000, 1)
         return result

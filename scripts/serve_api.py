@@ -122,9 +122,7 @@ def main():
     print(f"\n[2/2] 启动 HTTP 服务...")
     server = ThreadingHTTPServer(("0.0.0.0", args.port), APIHandler)
     print("=" * 55)
-    print(f"  Web 界面: http://localhost:{args.port}")
-    print(f"  API 文档: http://localhost:{args.port}/docs (仅 uvicorn 模式)")
-    print(f"  健康检查: http://localhost:{args.port}/health")
+    print(f"  Web 聊天界面: http://localhost:{args.port}")
     print("=" * 55)
     print("  按 Ctrl+C 停止服务\n")
 
