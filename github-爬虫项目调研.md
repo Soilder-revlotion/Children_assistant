@@ -7,12 +7,12 @@
 
 ## 一、GitHub 四大热门爬虫项目
 
-| 项目 | Stars | 核心优势 |
-|------|-------|---------|
-| **[Crawl4AI](https://github.com/unclecode/crawl4ai)** | ~64K | **专为 LLM 设计**，直接输出 Markdown/JSON，内置 Playwright + 反爬，开箱即用 |
-| **[Scrapy](https://github.com/scrapy/scrapy)** | 52.9K | 老牌异步框架，中间件生态丰富，可搭配 Playwright 插件 |
-| **[Crawlee Python](https://github.com/apify/crawlee-python)** | 8K+ | **内置指纹伪装**、代理轮换、会话管理，与 Playwright 深度整合 |
-| **[Scrapling](https://github.com/D4Vinci/Scrapling)** | 8.9K | **"不可检测"**，原生绕过 Cloudflare Turnstile，自适应 DOM 变化 |
+| 项目                                                            | Stars | 核心优势                                                     |
+| ------------------------------------------------------------- | ----- | -------------------------------------------------------- |
+| **[Crawl4AI](https://github.com/unclecode/crawl4ai)**         | ~64K  | **专为 LLM 设计**，直接输出 Markdown/JSON，内置 Playwright + 反爬，开箱即用 |
+| **[Scrapy](https://github.com/scrapy/scrapy)**                | 52.9K | 老牌异步框架，中间件生态丰富，可搭配 Playwright 插件                         |
+| **[Crawlee Python](https://github.com/apify/crawlee-python)** | 8K+   | **内置指纹伪装**、代理轮换、会话管理，与 Playwright 深度整合                   |
+| **[Scrapling](https://github.com/D4Vinci/Scrapling)**         | 8.9K  | **"不可检测"**，原生绕过 Cloudflare Turnstile，自适应 DOM 变化          |
 
 ### 各项目详情
 
@@ -52,12 +52,12 @@
 
 ## 二、反反爬 & 模拟真人方案
 
-| 工具 | 用途 |
-|------|------|
-| **[playwright-stealth](https://github.com/Mattwmaster58/playwright_stealth)** | 隐藏 `navigator.webdriver` 等自动化痕迹 |
-| **[humanization-playwright](https://github.com/saksham-personal/humanization-playwright)** | 贝塞尔曲线鼠标轨迹、变速键入、惯性滚动——全套真人模拟 |
-| **[pydoll](https://github.com/autoscrape-labs/pydoll)** | 基于 CDP 协议，无需 WebDriver，原生过 CAPTCHA |
-| **Playwright `storageState`** | **保存登录态**：登录一次，存为 JSON，后续复用，跳过每次登录 |
+| 工具                                                                                         | 用途                                 |
+| ------------------------------------------------------------------------------------------ | ---------------------------------- |
+| **[playwright-stealth](https://github.com/Mattwmaster58/playwright_stealth)**              | 隐藏 `navigator.webdriver` 等自动化痕迹    |
+| **[humanization-playwright](https://github.com/saksham-personal/humanization-playwright)** | 贝塞尔曲线鼠标轨迹、变速键入、惯性滚动——全套真人模拟        |
+| **[pydoll](https://github.com/autoscrape-labs/pydoll)**                                    | 基于 CDP 协议，无需 WebDriver，原生过 CAPTCHA |
+| **Playwright `storageState`**                                                              | **保存登录态**：登录一次，存为 JSON，后续复用，跳过每次登录 |
 
 ### Playwright storageState 用法
 
@@ -71,14 +71,14 @@ context = await browser.new_context(storage_state="auth.json")
 
 ### 反检测技术栈（逐层叠加）
 
-| 层级 | 工具 |
-|------|------|
+| 层级    | 工具                                                              |
+| ----- | --------------------------------------------------------------- |
 | 基础浏览器 | Patchright（打过补丁的 Playwright）或 Playwright + `playwright-stealth` |
-| CDP 层 | `pystealth` 阻止 Runtime.enable 泄露 |
-| 指纹层 | `playwright-stealth` 伪装模块，`browserforge` 生成真实指纹 |
-| 行为层 | `humanization-playwright` 贝塞尔鼠标轨迹 + 随机延迟 |
-| 网络层 | 轮换代理 IP + 轮换 User-Agent / Accept-Language |
-| 框架层 | `Crawlee` PlaywrightCrawler 统筹以上所有 |
+| CDP 层 | `pystealth` 阻止 Runtime.enable 泄露                                |
+| 指纹层   | `playwright-stealth` 伪装模块，`browserforge` 生成真实指纹                 |
+| 行为层   | `humanization-playwright` 贝塞尔鼠标轨迹 + 随机延迟                        |
+| 网络层   | 轮换代理 IP + 轮换 User-Agent / Accept-Language                       |
+| 框架层   | `Crawlee` PlaywrightCrawler 统筹以上所有                              |
 
 ---
 
@@ -102,24 +102,24 @@ CommonCrawl / 原始网页
 
 ### 参考中文数据集
 
-| 数据集 | 规模 | 说明 |
-|--------|------|------|
-| [Chinese-DeepSeek-R1-Distill-data-110k](https://github.com/YunwenTechnology/Chinese-Data-Distill-From-R1) | 110K 条 | 含 reasoning_content + content + score |
-| [ChineseWebText](https://github.com/CASIA-LM/ChineseWebText) | 1.42 TB | 含 600GB 高质量子集（质量分 > 90%） |
-| [CCI3.0-HQ](https://huggingface.co/datasets/BAAI/CCI3-HQ) | 500GB | 智源 BAAI，Qwen2-72B 打分筛选 |
-| [SkyPile-150B](https://huggingface.co/datasets/Skywork/SkyPile-150B) | ~150B tokens | 中文预训练语料 |
+| 数据集                                                                                                       | 规模           | 说明                                    |
+| --------------------------------------------------------------------------------------------------------- | ------------ | ------------------------------------- |
+| [Chinese-DeepSeek-R1-Distill-data-110k](https://github.com/YunwenTechnology/Chinese-Data-Distill-From-R1) | 110K 条       | 含 reasoning_content + content + score |
+| [ChineseWebText](https://github.com/CASIA-LM/ChineseWebText)                                              | 1.42 TB      | 含 600GB 高质量子集（质量分 > 90%）              |
+| [CCI3.0-HQ](https://huggingface.co/datasets/BAAI/CCI3-HQ)                                                 | 500GB        | 智源 BAAI，Qwen2-72B 打分筛选                |
+| [SkyPile-150B](https://huggingface.co/datasets/Skywork/SkyPile-150B)                                      | ~150B tokens | 中文预训练语料                               |
 
 ---
 
 ## 四、中文育儿类数据源（建议爬取目标）
 
-| 类型 | 站点举例 |
-|------|---------|
-| 母婴社区 | 宝宝树、妈妈网、育儿网 |
-| 问答平台 | 知乎-育儿话题、百度知道-育儿 |
-| 专业内容 | 丁香妈妈、育学园 |
-| 电商评价 | 京东/天猫母婴商品评论 |
-| 小红书 | 母婴笔记（需特殊处理 x-s 签名参数） |
+| 类型   | 站点举例                 |
+| ---- | -------------------- |
+| 母婴社区 | 宝宝树、妈妈网、育儿网          |
+| 问答平台 | 知乎-育儿话题、百度知道-育儿      |
+| 专业内容 | 丁香妈妈、育学园             |
+| 电商评价 | 京东/天猫母婴商品评论          |
+| 小红书  | 母婴笔记（需特殊处理 x-s 签名参数） |
 
 ---
 
