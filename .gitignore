@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# 环境变量（含 API Key）
+.env
+
+# 向量数据库（大文件，实际部署重建）
+data/chromadb/
+
+# 大模型文件
+*.gguf
+*.bin
+*.safetensors
+*.pth
+*.pt
+
+# 临时文件
+*.log
+*.tmp
+temp/
+tmp/
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ollama 模型存储
+D:/Models/
+
+# Playwright 浏览器
+playwright_browsers/
+
+# Claude Code 内部文件
+.claude/
+
+# 备份文件
+*_backup*.jsonl
+*_backup*.json
+
+# 认证状态（含 Cookie）
+data/auth/
+
+# 外部数据仓库
+data/external/

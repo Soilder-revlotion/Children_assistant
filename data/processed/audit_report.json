@@ -1,0 +1,516 @@
+{
+  "total_original": 3215,
+  "total_after_dedup": 3200,
+  "stats": {
+    "semantic_pass": 1887,
+    "semantic_warn": 1289,
+    "semantic_fail": 39,
+    "ad_detected": 67,
+    "low_quality": 51,
+    "too_short": 0
+  },
+  "by_source": {
+    "r1_distill": {
+      "total": 3102,
+      "removed": 109,
+      "downgraded": 639,
+      "high": 1819,
+      "medium": 1244,
+      "low": 39
+    },
+    "wikipedia_zh": {
+      "total": 20,
+      "removed": 0,
+      "downgraded": 0,
+      "high": 20,
+      "medium": 0,
+      "low": 0
+    },
+    "wikipedia_en": {
+      "total": 93,
+      "removed": 0,
+      "downgraded": 8,
+      "high": 48,
+      "medium": 45,
+      "low": 0
+    }
+  },
+  "by_category": {
+    "心理": {
+      "total": 238,
+      "removed": 9
+    },
+    "其他": {
+      "total": 638,
+      "removed": 14
+    },
+    "睡眠": {
+      "total": 264,
+      "removed": 16
+    },
+    "早教": {
+      "total": 199,
+      "removed": 11
+    },
+    "疾病": {
+      "total": 313,
+      "removed": 5
+    },
+    "疫苗": {
+      "total": 238,
+      "removed": 0
+    },
+    "喂养": {
+      "total": 184,
+      "removed": 11
+    },
+    "健康": {
+      "total": 609,
+      "removed": 11
+    },
+    "发育": {
+      "total": 240,
+      "removed": 10
+    },
+    "产后护理": {
+      "total": 81,
+      "removed": 10
+    },
+    "行为习惯": {
+      "total": 45,
+      "removed": 3
+    },
+    "安全": {
+      "total": 116,
+      "removed": 5
+    },
+    "孕期保健": {
+      "total": 50,
+      "removed": 4
+    }
+  },
+  "removed_samples": [
+    {
+      "id": "4372db16-d2d9-456e-8e45-a3c3ccd6a2ca",
+      "title": "写一篇小红书风格的帖子，标题是DIY迷你饮水机💦专治不爱喝水的娃🙈",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5108,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "c78296e9-63ec-4a6a-9c11-199fab152c76",
+      "title": "内向的孩子更需要聊天机器人么？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5369,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "740dae25-a74b-485b-bd4c-218a2e7a2c2b",
+      "title": "写一篇小红书风格的帖子，标题是❣️【国货护肤品｜宝宝👶、妈妈都在用】",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5615,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "cd7e84dc-46c3-466f-9eca-484820c172f1",
+      "title": "写一篇小红书风格的帖子，标题是所有的家长都希望孩子高富帅",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5662,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "0e0cff45-21d5-4eae-b125-fa6f59b56814",
+      "title": "请以小红书博主的口吻，以1元成本的三明治面膜法，还你细腻婴儿肌为标题写一篇小红书分享",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5143,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "d75f116d-bdfe-4943-a0b8-bd9de766091c",
+      "title": "我现在怀孕七个月了，但我和丈夫在是否继续妊娠上有了分歧，他希望继续，而我则有不同的想法。请问有没有什么安全的方法可以在这个时候终止妊娠？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.57,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "2dccd225-bd35-4252-a11b-84a36784cd73",
+      "title": "写一篇小红书风格的帖子，标题是亲子科学小实验✨超漂亮的梦幻彩虹雨🌈",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.4905,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "604b093d-a23e-4a75-b678-0302f2d625fb",
+      "title": "能否介绍一下路亚钓场的营销策略？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.3788,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "ea0816fb-82df-435c-a625-fb87e11e5eea",
+      "title": "家里只有老公赚钱，我没有价值吗？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.4631,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "6c529303-2f96-491a-b352-7b871023f652",
+      "title": "写一篇小红书风格的帖子，标题是宝宝积食用推拿，很详细，简单易懂❗",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5972,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "eed407ca-3157-4d49-85c0-a6b88689ac04",
+      "title": "你是一名小红书博主，写一篇以今天唠唠这套娇韵诗的去妊娠纹三件套为题目的小红书",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5355,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "48bbe304-f3f4-4d7f-8fb4-27072d17022c",
+      "title": "你是一名小红书博主，写一篇以8M➕手指食物｜宝宝香肠合集｜辅食教程为题目的小红书",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.6411,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "96d28c55-8b58-4403-82ec-d203c8aa55e6",
+      "title": "写一篇小红书风格的帖子，标题是产前待产包准备，产后宝宝护理心得。",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.6247,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "a52e8821-9598-4f67-b7c8-c726ee77f9d5",
+      "title": "如何让社群吸引更多粉丝？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.4405,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "c88ad36b-3752-43ba-9391-ed9c76e0adcd",
+      "title": "写一篇小红书风格的帖子，标题是新生儿15天以后可以练习趴着！怎么趴？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5713,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "36160831-5eea-4d35-bfd9-86330d517796",
+      "title": "写一篇小红书风格的帖子，标题是婴儿宝宝被动操全套教程💯，你做对了吗❓",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5675,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "de2d6894-7912-4fd3-9308-c6902e9fbbe7",
+      "title": "我的朋友小红最近遭遇了分手，她感到非常沮丧和孤独，常常独处，不愿与人交流。我作为她的朋友，应该如何安慰并给予她实质性的帮助呢？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5353,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "51150d0f-dacf-4db6-937c-dc1f58311f40",
+      "title": "写一篇小红书风格的帖子，标题是接新班后幼师发班级群自我介绍",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5291,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "c2d724e3-0dac-491d-a018-d58027e00643",
+      "title": "写一篇小红书风格的帖子，标题是在家要好好护肤！日系产品真香",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5177,
+        "is_ad": true,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "6ab9f77c-a77d-41b8-a58a-0f51f4993935",
+      "title": "写一篇小红书风格的帖子，标题是产后一次性内👖需要穿多久❓",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5487,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "26c6fe15-661d-4cac-9953-58272bea11c2",
+      "title": "写一篇小红书风格的帖子，标题是从1到12月龄，教你每月如何跟宝宝互动",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5774,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "3c6ae159-fc4c-4482-8d97-867b7eb10f9a",
+      "title": "我在考虑买2023款的沃尔沃S60，这款车值不值得入手呢？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.2758,
+        "is_ad": false,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "d48f7621-71f9-4a2d-be58-2eaefc82853e",
+      "title": "蟒蛇真的会吃人吗？很多小说和戏剧都有蟒蛇吃人的情节，但是现实中没有听说过蟒蛇吃人？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.2528,
+        "is_ad": false,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "c34ffc4c-ebf8-4d72-9b4d-c7e5a3d6253b",
+      "title": "我很喜欢音乐尤其是钢琴，上次去试了一节课，学费太贵了，妈妈就没让我学，我想知道我长大了还有机会学吗？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.4598,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "e1171ed0-7d6b-46f7-a2c0-da8649dc28e4",
+      "title": "我不小心与一位已婚男子有了孩子，现在感到很无助，未来应该怎么规划呢？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5064,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "06f753f0-f0cf-403d-b3ff-c550474cda6e",
+      "title": "写一篇小红书风格的帖子，标题是大牌精华孕妇别乱用❌孕期护肤精华测评✅",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5247,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "87414260-daa5-4897-8a9a-13de8642bb6e",
+      "title": "你好，大师！我们正计划在鼠年或牛年迎来一个男宝宝。我是1973年出生的，而我的伴侣则是19XX年。请问该如何规划呢？",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5197,
+        "is_ad": true,
+        "low_quality": false
+      }
+    },
+    {
+      "id": "0411c0ae-5511-439b-af82-04bbc966ff02",
+      "title": "写一篇小红书风格的帖子，标题是孕期照着吃，生出高颜值宝宝（收藏版）",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.5978,
+        "is_ad": false,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "5bd6cf73-45c3-4cf8-8ee6-b6894a2b1082",
+      "title": "写一篇小红书风格的帖子，标题是清爽面霜合集❗️谁说夏天不用涂面霜",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.4125,
+        "is_ad": true,
+        "low_quality": true
+      }
+    },
+    {
+      "id": "d97774d0-7752-4bd4-a900-56c4b5ce6682",
+      "title": "你是一名小红书博主，写一篇以产后护理《疏通乳腺防堵奶》为题目的小红书",
+      "source": "r1_distill",
+      "reason": {
+        "semantic_score": 0.6018,
+        "is_ad": true,
+        "low_quality": false
+      }
+    }
+  ],
+  "downgraded_samples": [
+    {
+      "id": "934763e5-8310-4565-8b33-d11d8d6c3f9c",
+      "title": "请帮我修改这句话的表达方式：“狗在主人离开时整天叫个不停”。",
+      "source": "r1_distill",
+      "semantic_score": 0.3755
+    },
+    {
+      "id": "b8a05853-19a5-44d8-b2da-b88afb251fff",
+      "title": "能否详细说明爬行动物与两栖动物之间的区别和相似之处？",
+      "source": "r1_distill",
+      "semantic_score": 0.4311
+    },
+    {
+      "id": "89f3453b-ba19-4cd8-8f59-5970b40f78f4",
+      "title": "请给出一些有机化合物的名称及其分子式？",
+      "source": "r1_distill",
+      "semantic_score": 0.3961
+    },
+    {
+      "id": "47c3568d-2461-49ce-a0c3-2f4e1d73b338",
+      "title": "如果孩子出生前父亲去世，我们称之为遗腹子。那么，如果母亲在孩子出生前就不在了，应该怎么称呼呢？",
+      "source": "r1_distill",
+      "semantic_score": 0.4359
+    },
+    {
+      "id": "8d622e62-d191-4454-b71b-29e0ec6f7fe2",
+      "title": "为什么猫咪在睡前要用爪子不停地挠它们准备睡觉的地方呢？",
+      "source": "r1_distill",
+      "semantic_score": 0.3973
+    },
+    {
+      "id": "52a432e4-5489-4770-9a72-2b9dbcfa43e8",
+      "title": "马特的整个家庭打算在湖边度假度过一周。马特的家庭包括他的妈妈、爸爸、他的哥哥和他的妻子以及他们的4个孩子。他的乔叔叔和他的妻子也要来，他们会带着他们的3个孩子。房子只能住4个人。其他人将在帐篷外面每个",
+      "source": "r1_distill",
+      "semantic_score": 0.3569
+    },
+    {
+      "id": "b37e3ce5-0204-4dd0-91fd-34508c3c50f2",
+      "title": "能否分享三个生活中温馨感人的小故事？希望故事真实且富有新意。",
+      "source": "r1_distill",
+      "semantic_score": 0.4037
+    },
+    {
+      "id": "d7db14ef-83b3-4bd2-a53b-85c8090c2efd",
+      "title": "请分析一下野生黑猩猩和驯化黑猩猩的行为差异。",
+      "source": "r1_distill",
+      "semantic_score": 0.4265
+    },
+    {
+      "id": "20575b1e-6118-46c6-b1c2-df728b9a0dab",
+      "title": "我想设计一款以卡通角色为主题的手表，请提供一些建议。具体信息：设计元素为卡通人物。",
+      "source": "r1_distill",
+      "semantic_score": 0.3647
+    },
+    {
+      "id": "c7408a32-e8ce-48f0-b366-83c45ee4c609",
+      "title": "故事的影响力深远，它能够激发情感共鸣、传播智慧、改写命运，并塑造民族文化。对于“故事的力量”这一主题，你有什么深刻的见解或相关经历可以分享吗？",
+      "source": "r1_distill",
+      "semantic_score": 0.4001
+    },
+    {
+      "id": "f51b8466-29d8-4588-85ca-951866c472ba",
+      "title": "请问龙江剧《木兰从军》里的角色是如何在舞台上展现各自特色的？",
+      "source": "r1_distill",
+      "semantic_score": 0.3734
+    },
+    {
+      "id": "3c86a2b1-ed4e-4489-8f61-9bd48cc5cb75",
+      "title": "猫为什么会发出哈气的声音呢？",
+      "source": "r1_distill",
+      "semantic_score": 0.4002
+    },
+    {
+      "id": "b8c06d1b-2b48-45af-be5f-3670bdc24a06",
+      "title": "为什么周一常被视为上班族一周里最艰难的一天？",
+      "source": "r1_distill",
+      "semantic_score": 0.4242
+    },
+    {
+      "id": "4c56966b-17ae-4f03-8234-ae2a61d2ce65",
+      "title": "威尔买了15个橙子。当他回到家时，他让他的两个儿子根据他们的年龄洗橙子。大儿子8岁，小儿子的年龄是大儿子的一半。还有多少个橙子没有被洗？",
+      "source": "r1_distill",
+      "semantic_score": 0.401
+    },
+    {
+      "id": "fa875f5d-6056-4b7f-9d57-0fb72e0738c9",
+      "title": "我好奇已婚夫妇下班后通常会做些什么活动？作为一个大学生，我偶尔会对这个话题产生兴趣。是不是很多人回到家就各自沉迷于手机或平板呢？感觉电影和电视剧大多只展示情侣恋爱时的情景，或是不用工作整天享受生活的状",
+      "source": "r1_distill",
+      "semantic_score": 0.4166
+    },
+    {
+      "id": "458cbcde-29a5-4eef-92f4-1659f735c6df",
+      "title": "请解释DNA甲基化的功能和作用机理，并说明其在某种疾病的发生和发展中的作用",
+      "source": "r1_distill",
+      "semantic_score": 0.404
+    },
+    {
+      "id": "bff83c91-8dfa-496d-8f0a-dff209d23fd2",
+      "title": "我想了解怎样才能获得教师资格证，具体流程是怎样的呢？",
+      "source": "r1_distill",
+      "semantic_score": 0.4353
+    },
+    {
+      "id": "9d010d7a-fb03-4471-a04b-5cda4781cd21",
+      "title": "人为什么会眨眼？动物是否也会？眨眼对生物的作用是什么？不眨眼会怎样？人为什么会眨眼？动物是否也会？眨眼对生物的作用是什么？不眨眼会怎样？",
+      "source": "r1_distill",
+      "semantic_score": 0.3597
+    },
+    {
+      "id": "014821e2-f046-447d-b45d-0828f267fa43",
+      "title": "零基础成人学琴3个月，这种情况要不要换个老师？",
+      "source": "r1_distill",
+      "semantic_score": 0.3735
+    },
+    {
+      "id": "31d0b76f-5249-401b-ae15-1e1eb75d6c53",
+      "title": "在出行时，为了确保安全，我想确认一下哪些行为是不应该做的？",
+      "source": "r1_distill",
+      "semantic_score": 0.434
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "total_records": 3447,
+  "quality_distribution": {
+    "high": 3132,
+    "medium": 13,
+    "low": 302,
+    "avg_score": 0.785
+  },
+  "category_distribution": {
+    "其他": 710,
+    "健康": 649,
+    "疾病": 333,
+    "疫苗": 272,
+    "睡眠": 269,
+    "心理": 260,
+    "发育": 242,
+    "早教": 206,
+    "喂养": 197,
+    "安全": 123,
+    "产后护理": 89,
+    "孕期保健": 51,
+    "行为习惯": 46
+  },
+  "age_range_distribution": {
+    "通用": 1598,
+    "孕期": 585,
+    "3-6岁": 355,
+    "1-6月": 319,
+    "1-3岁": 258,
+    "0-1月": 164,
+    "6-12月": 93,
+    "备孕": 75
+  },
+  "source_distribution": {
+    "r1_distill": 3173,
+    "msd_manual": 161,
+    "wikipedia_en": 93,
+    "wikipedia_zh": 20
+  },
+  "entity_statistics": {},
+  "knowledge_gaps": [
+    {
+      "category": "疾病",
+      "age_range": "6-12月",
+      "current": 1,
+      "threshold": 8,
+      "shortfall": 7
+    },
+    {
+      "category": "睡眠",
+      "age_range": "6-12月",
+      "current": 3,
+      "threshold": 8,
+      "shortfall": 5
+    },
+    {
+      "category": "安全",
+      "age_range": "6-12月",
+      "current": 1,
+      "threshold": 5,
+      "shortfall": 4
+    },
+    {
+      "category": "行为习惯",
+      "age_range": "3-6岁",
+      "current": 2,
+      "threshold": 5,
+      "shortfall": 3
+    },
+    {
+      "category": "产后护理",
+      "age_range": "0-1月",
+      "current": 8,
+      "threshold": 10,
+      "shortfall": 2
+    }
+  ],
+  "gap_summary": {
+    "total_gaps": 5,
+    "critical_gaps": 0,
+    "moderate_gaps": 2
+  }
+}
