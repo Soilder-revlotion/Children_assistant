@@ -36,58 +36,40 @@
 
 ## 快速开始
 
+> **新电脑从零部署？** → 看 [STARTUP.md](STARTUP.md)，8 步完整指南。
+
 ### 环境要求
 
 - Python 3.10+
-- [Ollama](https://ollama.com)（本地 LLM 推理）
-- 8GB+ 内存（BGE 模型 ~100MB，Qwen2.5:3b ~1.9GB）
+- [Ollama](https://ollama.com) + qwen2.5:3b（本地 LLM，1.9GB）
+- 8GB+ 内存
 
-### 1. 安装依赖
+### 1. 安装依赖 + 拉取模型
 
 ```bash
 pip install -r requirements.txt
-```
-
-### 2. 拉取 LLM 模型
-
-```bash
 ollama pull qwen2.5:3b
 ```
 
-### 3. 配置环境
+### 2. 配置
 
 ```bash
-cp .env.example .env
-# 编辑 .env，确认以下配置：
-#   LLM_PROVIDER=ollama
-#   OLLAMA_URL=http://localhost:11434/v1
-#   OLLAMA_MODEL=qwen2.5:3b
+cp .env.example .env    # 默认即用，无需修改
 ```
 
-### 4. 启动服务
+### 3. 构建索引（新电脑必须做一次）
 
 ```bash
-# Windows（推荐，避免 uvicorn + PyTorch 兼容问题）
+python scripts/build_index.py
+```
+
+### 4. 启动
+
+```bash
 python scripts/serve_api.py --port 8000
-
-# Linux / Mac
-python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000
 ```
 
-### 5. 测试
-
-```bash
-# 健康检查
-curl http://localhost:8000/health
-
-# 知识库统计
-curl http://localhost:8000/api/knowledge/stats
-
-# 问答
-curl -X POST http://localhost:8000/api/chat \
-  -H "Content-Type: application/json" \
-  -d '{"question": "宝宝发烧怎么办", "top_k": 3}'
-```
+浏览器打开 **http://localhost:8000** 即可使用。
 
 ## API 接口
 

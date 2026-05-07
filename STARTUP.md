@@ -1,137 +1,175 @@
-# 育儿助手 RAG 系统 — 部署启动指南
+# 育儿助手 RAG 系统 — 新电脑完整部署指南
 
-## 环境要求
+从零开始在任意 Windows/Mac/Linux 电脑上部署本项目。
 
-- Python 3.10+
-- Ollama（本地 LLM，默认 http://localhost:11434）
-- 已安装依赖: `pip install -r requirements.txt`
+## 第一步：安装 Python
 
-## 1. 前置检查
+要求 Python **3.10 或以上**。
+
+- 官网下载: https://www.python.org/downloads/
+- 安装时勾选 "Add Python to PATH"
+
+验证安装：
+```bash
+python --version   # 应显示 3.10+
+```
+
+## 第二步：克隆项目
 
 ```bash
-# 确认 Ollama 服务运行中
-curl http://localhost:11434/api/tags
+git clone https://github.com/Soilder-revlotion/Children_assistant.git
+cd Children_assistant
+```
 
-# 确认模型已拉取（默认 qwen2.5:3b）
-ollama list
+## 第三步：安装依赖
 
-# 如需拉取模型
+```bash
+pip install -r requirements.txt
+```
+
+如果下载慢，用国内镜像：
+```bash
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+## 第四步：安装 Ollama 并下载模型
+
+Ollama 是本地 AI 运行环境，项目用它来"思考"和生成回答。
+
+1. 官网下载安装: https://ollama.com/download
+2. 安装后自动在后台运行（任务栏有图标）
+3. 打开终端/命令行，下载模型：
+
+```bash
 ollama pull qwen2.5:3b
 ```
 
-## 2. 配置文件
+> 模型约 1.9GB，下载需要几分钟。默认存在 C 盘，想改到其他盘：[Ollama 模型迁移指南](https://github.com/ollama/ollama#how-do-i-set-the-model-storage-location)
 
-编辑项目根目录 `.env`:
+验证：
 ```bash
-# --- LLM 本地模型 ---
-LLM_PROVIDER=ollama
-OLLAMA_URL=http://localhost:11434/v1
-OLLAMA_MODEL=qwen2.5:3b
-
-# --- 可选增强（按需开启）---
-# USE_HYDE=true       # HyDE 假设回答增强
-# USE_RERANKER=true   # Reranker 精排（需 1.1GB 显存）
-
-# --- DeepSeek API（备选，需 API Key）---
-# LLM_PROVIDER=deepseek
-# DEEPSEEK_API_KEY=sk-your-key-here
+ollama list                    # 应该看到 qwen2.5:3b
+curl http://localhost:11434/api/tags   # 应该返回 JSON
 ```
 
-> `.env` 文件会自动加载，无需手动 source。
-
-## 3. 启动 API 服务
+## 第五步：配置环境变量
 
 ```bash
-cd D:\claude\1-1pachong
+# 复制配置模板
+cp .env.example .env
+```
 
-# 方式一：简易 HTTP Server（推荐，Windows 兼容）
+默认配置即可使用（Ollama 本地模型），无需修改。`.env` 文件内容：
+
+```bash
+LLM_PROVIDER=ollama                  # 使用本地模型
+OLLAMA_URL=http://localhost:11434/v1 # Ollama 地址
+OLLAMA_MODEL=qwen2.5:3b             # 模型名称
+PORT=8000                            # 端口号
+```
+
+## 第六步：构建向量索引（关键！）
+
+> 索引文件（`data/chromadb/`）太大未上传 GitHub，新电脑必须自己构建一次。
+
+```bash
+python scripts/build_index.py
+```
+
+这个过程会：
+- 加载 3447 条知识库记录
+- 用 BGE 模型将每条知识转为 512 维语义向量
+- 存入 ChromaDB
+
+预计耗时 2-5 分钟（取决于 CPU）。
+
+## 第七步：启动服务
+
+```bash
 python scripts/serve_api.py --port 8000
-
-# 方式二：uvicorn（Linux/Mac，Windows 上可能出现 segfault）
-python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000
 ```
 
-启动后输出：
+看到以下输出表示成功：
 ```
-育儿助手 API: http://0.0.0.0:8000
-Health check: http://localhost:8000/health
-[INIT] Loading RAG engine...
-[INFO] BGE embedding model loaded, dim=512
-[INFO] ChromaDB connected, 7609 docs
-[INIT] RAG engine ready, chromadb=True, embedding=True
+=======================================================
+  育儿助手 RAG 系统启动中...
+=======================================================
+[1/2] 加载 BGE 嵌入模型 + ChromaDB 知识库...
+      ChromaDB: 7609 条索引
+      BGE 模型: 已加载
+      LLM: qwen2.5:3b
+      耗时: 8s
+[2/2] 启动 HTTP 服务...
+=======================================================
+  Web 聊天界面: http://localhost:8000
+=======================================================
+  按 Ctrl+C 停止服务
 ```
 
-## 4. 验证服务
+## 第八步：打开浏览器
+
+访问 **http://localhost:8000**
+
+看到聊天界面，输入育儿问题即可。
+
+---
+
+## 验证是否正常
+
+在另一个终端测试：
 
 ```bash
-# 健康检查
+# 测试 1：健康检查
 curl http://localhost:8000/health
+# → {"status":"ok","service":"育儿助手 RAG API"}
 
-# 知识库统计
+# 测试 2：知识库统计
 curl http://localhost:8000/api/knowledge/stats
+# → {"indexed_documents":7609,"index_type":"chromadb","llm_provider":"qwen2.5:3b"}
 
-# 问答测试
+# 测试 3：问答
 curl -X POST http://localhost:8000/api/chat \
   -H "Content-Type: application/json" \
-  -d '{"question": "新生儿母乳喂养有哪些注意事项", "top_k": 3}'
+  -d '{"question": "新生儿母乳喂养有哪些注意事项"}'
+# → 返回完整回答 + 参考来源
 ```
 
-## 5. 数据管道（维护用）
+---
 
+## 可选：使用云端 API 替代本地模型
+
+如果电脑配置低（<8GB 内存），可以使用 DeepSeek 云端 API：
+
+1. 注册 https://platform.deepseek.com 获取 API Key
+2. 修改 `.env`：
+   ```bash
+   LLM_PROVIDER=deepseek
+   DEEPSEEK_API_KEY=sk-你的key
+   ```
+3. 重启服务即可，无需 Ollama
+
+---
+
+## 常见问题
+
+**Q: `pip install` 报错**
+A: 尝试 `pip install --upgrade pip`，或使用国内镜像 `-i https://pypi.tuna.tsinghua.edu.cn/simple`
+
+**Q: `ollama pull` 下载很慢**
+A: 设置代理或手动下载 GGUF 模型文件导入。参考: https://github.com/ollama/ollama#how-do-i-import-a-model
+
+**Q: 启动时 segfault 崩溃（Windows 常见）**
+A: 已解决。项目使用 `python scripts/serve_api.py` 而非 uvicorn 启动，避免了 PyTorch + uvicorn 的兼容问题。
+
+**Q: 回答质量不好**
+A: 默认模型 qwen2.5:3b 是 3B 小型模型，适合低配电脑。升级方式：
 ```bash
-# 爬取默沙东诊疗手册
-python crawlers/crawl_msd_manual.py
-
-# R1 蒸馏生成 Q&A 对
-python scripts/distill_data.py --samples 100 --qa-only
-
-# 数据处理：合并 → 去重 → PII 脱敏 → 构建知识库
-python scripts/process_knowledge.py
-
-# 知识库质量增强：标签 + 实体 + 评分 + 缺口分析
-python scripts/enhance_knowledge.py
-
-# 重建向量索引
-python scripts/build_index.py              # 全量重建
-python scripts/build_index.py --incremental # 增量更新
+ollama pull qwen2.5:7b
+# 修改 .env 中 OLLAMA_MODEL=qwen2.5:7b
 ```
 
-## 6. 项目目录结构
+**Q: 端口 8000 被占用**
+A: `python scripts/serve_api.py --port 8080` 换个端口
 
-```
-├── backend/
-│   ├── config.py          # 配置 + .env 加载
-│   ├── main.py            # FastAPI 应用
-│   └── rag_engine.py      # RAG 引擎（检索 + 生成）
-├── crawlers/
-│   └── crawl_msd_manual.py # MSD Manual 爬虫
-├── scripts/
-│   ├── serve_api.py       # 简易 HTTP Server（推荐启动方式）
-│   ├── process_knowledge.py # 数据处理管道
-│   ├── build_index.py     # 向量索引构建
-│   ├── enhance_knowledge.py # 知识库质量增强
-│   ├── distill_data.py    # R1/Qwen 数据蒸馏
-│   └── common_schema.py   # 公共数据模型
-├── knowledge_base/
-│   ├── parenting_knowledge_base.jsonl          # 主知识库 (3447条)
-│   └── parenting_knowledge_base_enhanced.jsonl # 增强版（含实体/评分）
-├── data/
-│   ├── raw/               # 原始爬取数据
-│   ├── chromadb/          # ChromaDB 向量索引
-│   └── processed/         # 处理统计报告
-└── .env                   # 环境变量配置
-```
-
-## 7. 常见问题
-
-**Q: API 返回 "LLM 服务未配置"**
-A: 检查 `.env` 文件是否存在，`LLM_PROVIDER` 是否正确，Ollama 是否运行。
-
-**Q: Windows 上启动出现 segfault**
-A: 使用 `python scripts/serve_api.py` 替代 uvicorn。
-
-**Q: 检索结果来源全是 r1_distill**
-A: 正常。知识库中 r1_distill 占 92%（3173/3447），MSD Manual 占 5%（161/3447）。专业医学查询会优先匹配 MSD Manual。
-
-**Q: 如何升级 LLM**
-A: 拉取更大模型 `ollama pull qwen2.5:7b`，修改 `.env` 中 `OLLAMA_MODEL=qwen2.5:7b`。
+**Q: 如何更新代码**
+A: `git pull` 拉取最新，如果知识库有变化需重建索引：`python scripts/build_index.py`
