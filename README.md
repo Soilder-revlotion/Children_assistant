@@ -2,6 +2,12 @@
 
 基于 **RAG（检索增强生成）** 的育儿知识问答系统。整合默沙东诊疗手册、Wikipedia、合成蒸馏数据等来源，使用 BGE 语义检索 + 本地大模型生成专业育儿建议。
 
+示例
+<img width="1440" height="885" alt="image" src="https://github.com/user-attachments/assets/1b803bdd-97e8-4df6-9e01-bfdff7f76ce5" />
+
+<img width="1440" height="885" alt="image" src="https://github.com/user-attachments/assets/5894f3e0-cb6a-44d4-871b-2ac8ed04ba38" />
+
+
 ## 系统架构
 
 ```
