@@ -1,26 +1,25 @@
 """
-简易 HTTP API 服务器 — 绕过 uvicorn + PyTorch segfault 问题
+育儿助手 HTTP API 服务器 — Windows 兼容版
 用法: python scripts/serve_api.py --port 8000
 """
 import json
 import os
 import sys
-from http.server import HTTPServer, BaseHTTPRequestHandler
+import time
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from backend.rag_engine import RAGEngine
 
+FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "..", "frontend")
+
 
 class APIHandler(BaseHTTPRequestHandler):
-    engine = None  # 类级别共享
+    engine = None
 
     @classmethod
     def get_engine(cls):
-        if cls.engine is None:
-            print("[INIT] Loading RAG engine...")
-            cls.engine = RAGEngine()
-            print(f"[INIT] RAG engine ready, chromadb={cls.engine.use_chromadb}, embedding={cls.engine.use_embedding}")
-        return cls.engine
+        return cls.engine  # 已在 main() 中预加载
 
     def _send_json(self, data, status=200):
         body = json.dumps(data, ensure_ascii=False).encode("utf-8")
@@ -30,13 +29,6 @@ class APIHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         self.wfile.write(body)
-
-    def do_OPTIONS(self):
-        self.send_response(200)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
-        self.end_headers()
 
     def _serve_file(self, path, content_type):
         try:
@@ -50,10 +42,16 @@ class APIHandler(BaseHTTPRequestHandler):
         except FileNotFoundError:
             self._send_json({"error": "Not found"}, 404)
 
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
+
     def do_GET(self):
         if self.path == "/" or self.path == "/index.html":
-            frontend_dir = os.path.join(os.path.dirname(__file__), "..", "frontend")
-            self._serve_file(os.path.join(frontend_dir, "index.html"), "text/html; charset=utf-8")
+            self._serve_file(os.path.join(FRONTEND_DIR, "index.html"), "text/html; charset=utf-8")
         elif self.path == "/health":
             self._send_json({"status": "ok", "service": "育儿助手 RAG API"})
         elif self.path == "/api/knowledge/stats":
@@ -82,7 +80,6 @@ class APIHandler(BaseHTTPRequestHandler):
                 self._send_json({"error": "问题不能为空"}, 400)
                 return
 
-            import time
             engine = self.get_engine()
             t0 = time.time()
             result = engine.query(question)
@@ -107,9 +104,30 @@ def main():
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
 
-    server = HTTPServer(("0.0.0.0", args.port), APIHandler)
-    print(f"育儿助手 API: http://0.0.0.0:{args.port}")
-    print(f"Health check: http://localhost:{args.port}/health")
+    # ── 预加载 RAG 引擎（BGE 模型 + ChromaDB），避免首次请求卡住 ──
+    print("=" * 55)
+    print("  育儿助手 RAG 系统启动中...")
+    print("=" * 55)
+    print("[1/2] 加载 BGE 嵌入模型 + ChromaDB 知识库...")
+    t0 = time.time()
+    APIHandler.engine = RAGEngine()
+    elapsed = time.time() - t0
+    if APIHandler.engine.use_chromadb:
+        print(f"      ChromaDB: {APIHandler.engine.collection.count()} 条索引")
+    print(f"      BGE 模型: {'已加载' if APIHandler.engine.use_embedding else '未加载（回退 ChromaDB 内置）'}")
+    print(f"      LLM: {APIHandler.engine.llm_config.get('model', '?')}")
+    print(f"      耗时: {elapsed:.0f}s")
+
+    # ── 启动服务器 ──
+    print(f"\n[2/2] 启动 HTTP 服务...")
+    server = ThreadingHTTPServer(("0.0.0.0", args.port), APIHandler)
+    print("=" * 55)
+    print(f"  Web 界面: http://localhost:{args.port}")
+    print(f"  API 文档: http://localhost:{args.port}/docs (仅 uvicorn 模式)")
+    print(f"  健康检查: http://localhost:{args.port}/health")
+    print("=" * 55)
+    print("  按 Ctrl+C 停止服务\n")
+
     try:
         server.serve_forever()
     except KeyboardInterrupt:
