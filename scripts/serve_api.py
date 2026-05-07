@@ -38,8 +38,23 @@ class APIHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
 
+    def _serve_file(self, path, content_type):
+        try:
+            with open(path, "rb") as f:
+                data = f.read()
+            self.send_response(200)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+        except FileNotFoundError:
+            self._send_json({"error": "Not found"}, 404)
+
     def do_GET(self):
-        if self.path == "/health":
+        if self.path == "/" or self.path == "/index.html":
+            frontend_dir = os.path.join(os.path.dirname(__file__), "..", "frontend")
+            self._serve_file(os.path.join(frontend_dir, "index.html"), "text/html; charset=utf-8")
+        elif self.path == "/health":
             self._send_json({"status": "ok", "service": "育儿助手 RAG API"})
         elif self.path == "/api/knowledge/stats":
             engine = self.get_engine()
