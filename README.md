@@ -34,42 +34,20 @@
 - **向量索引**: ChromaDB 7,609 chunks，BGE-small-zh-v1.5 (512d)
 - **覆盖**: 备孕 → 孕期 → 0-1月 → 1-6月 → 6-12月 → 1-3岁 → 3-6岁 → 6岁+
 
-## 快速开始
+## 新电脑部署（8 步）
 
-> **新电脑从零部署？** → 看 [STARTUP.md](STARTUP.md)，8 步完整指南。
+| 步骤 | 命令 | 说明 |
+|:---:|------|------|
+| 1 | 安装 Python 3.10+ | [python.org](https://www.python.org/downloads/) 下载，勾选"Add to PATH" |
+| 2 | `git clone https://github.com/Soilder-revlotion/Children_assistant.git` | 拉取项目代码 |
+| 3 | `pip install -r requirements.txt` | 安装 Python 依赖 |
+| 4 | 安装 [Ollama](https://ollama.com) → `ollama pull qwen2.5:3b` | 下载本地模型（1.9GB） |
+| 5 | `cp .env.example .env` | 创建配置文件，默认即用 |
+| 6 | `python scripts/build_index.py` | **构建向量索引**（新电脑必须，约 3 分钟） |
+| 7 | `python scripts/serve_api.py --port 8000` | 启动服务 |
+| 8 | 浏览器打开 `http://localhost:8000` | 开始提问 |
 
-### 环境要求
-
-- Python 3.10+
-- [Ollama](https://ollama.com) + qwen2.5:3b（本地 LLM，1.9GB）
-- 8GB+ 内存
-
-### 1. 安装依赖 + 拉取模型
-
-```bash
-pip install -r requirements.txt
-ollama pull qwen2.5:3b
-```
-
-### 2. 配置
-
-```bash
-cp .env.example .env    # 默认即用，无需修改
-```
-
-### 3. 构建索引（新电脑必须做一次）
-
-```bash
-python scripts/build_index.py
-```
-
-### 4. 启动
-
-```bash
-python scripts/serve_api.py --port 8000
-```
-
-浏览器打开 **http://localhost:8000** 即可使用。
+> 详细说明（环境要求、验证测试、常见问题）→ [STARTUP.md](STARTUP.md)
 
 ## API 接口
 
